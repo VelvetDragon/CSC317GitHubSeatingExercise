@@ -116,11 +116,39 @@ namespace CSC317GitHubSeatingExercise
             }
         }
 
-        //Assign to Team 1 Member
-        private void ButtonReserveRange(object sender, EventArgs e)
-        {
+      //Suwan Aryal / Chetanchal Saud
+     private async void ButtonReserveRange(object sender, EventArgs e)
+     {
+         var startSeat = await DisplayPromptAsync("Reserve a Seat Range", "Enter starting seat number: ");
+         var endSeat = await DisplayPromptAsync("Reserve a Seat Range", "Enter ending seat number: ");
 
-        }
+         if (startSeat != null && endSeat != null)
+         {
+             bool rangeFound = false;
+             for (int i = 0; i < seatingChart.GetLength(0); i++)
+             {
+                 for (int j = 0; j < seatingChart.GetLength(1); j++)
+                 {
+                     if (seatingChart[i, j].Name == startSeat)
+                     {
+                         rangeFound = true;
+                     }
+
+                     if (rangeFound)
+                     {
+                         seatingChart[i, j].Reserved = true;
+
+                         if (seatingChart[i, j].Name == endSeat)
+                         {
+                             await DisplayAlert("Success", "The seat range was successfully reserved!", "Ok");
+                             RefreshSeating();
+                             return;
+                         }
+                     }
+                 }
+             }
+         }
+     }  
 
         //Bibas Kandel
         private void ButtonCancelReservation(object sender, EventArgs e)
@@ -148,65 +176,40 @@ namespace CSC317GitHubSeatingExercise
 
         }
 
-        //Assign to Team 3 Member
-        private async void ButtonCancelReservationRange(object sender, EventArgs e)
-{
-    var seat = await DisplayPromptAsync("Enter the range of seats", "Enter your range (e.g., A5-A8): ");
-    if (seat != null)
-    {
-        string[] seatRange = seat.Split('-');
+      //Kadin Dengler / Chetanchal Saud
+     private async void ButtonReserveRange(object sender, EventArgs e)
+     {
+         var startSeat = await DisplayPromptAsync("Cancel Reservation Range", "Enter starting seat number: ");
+         var endSeat = await DisplayPromptAsync("Cancel Reservation Range", "Enter ending seat number: ");
 
-        if (seatRange.Length == 2)
-        {
-            string seatStart = seatRange[0].Trim();
-            string seatEnd = seatRange[1].Trim();
+         if (startSeat != null && endSeat != null)
+         {
+             bool rangeFound = false;
+             for (int i = 0; i < seatingChart.GetLength(0); i++)
+             {
+                 for (int j = 0; j < seatingChart.GetLength(1); j++)
+                 {
+                     if (seatingChart[i, j].Name == startSeat)
+                     {
+                         rangeFound = true;
+                     }
 
-            bool foundStart = false;
-            bool foundEnd = false;
+                     if (rangeFound)
+                     {
+                         seatingChart[i, j].Reserved = false;
 
-            for (int i = 0; i < seatingChart.GetLength(0); i++)
-            {
-                for (int j = 0; j < seatingChart.GetLength(1); j++)
-                {
+                         if (seatingChart[i, j].Name == endSeat)
+                         {
+                             await DisplayAlert("Success", "The reservation range was successfully canceled!", "Ok");
+                             RefreshSeating();
+                             return;
+                         }
+                     }
+                 }
+             }
+         }
+     }  
 
-                    if (seatingChart[i, j].Name == seatStart)
-                    {
-                        foundStart = true;
-                    }
-                    //Go until the last seat to reserve
-                    if (foundStart && !foundEnd)
-                    {
-                        seatingChart[i, j].Reserved = false;
-                    }
-
-                    //end when the seatend is found and break
-                    if (seatingChart[i, j].Name == seatEnd)
-                    {
-                        foundEnd = true;
-                        break;
-                    }
-                }
-
-                if (foundEnd) break;
-            }
-
-            if (foundStart && foundEnd)
-            {
-                await DisplayAlert("Successfully Cancelled", "The range of seats was cancelled successfully!", "Ok");
-            }
-            else
-            {
-                await DisplayAlert("Error", "Invalid seat range.", "Ok");
-            }
-
-            RefreshSeating();
-        }
-        else
-        {
-            await DisplayAlert("Error", "Please enter a valid seat range (e.g., A1-A5).", "Ok");
-        }
-    }
-}
 
         //Gunjan Sah
         private void ButtonResetSeatingChart(object sender, EventArgs e)

@@ -157,6 +157,22 @@ namespace CSC317GitHubSeatingExercise
         //Assign to Team 4 Member
         private void ButtonResetSeatingChart(object sender, EventArgs e)
         {
+        for(int i = 0; i < seatingChart.GetLength(0); i++)
+            {
+                for (int j = 0; j < seatingChart.GetLength(1); j++)
+                {
+                    if (seatingChart[i, j].Reserved == true)
+                    { 
+                        seatingChart[i, j].Reserved = false;
+                        
+                    }
+                }
+            }
+            await DisplayAlert("All Reservations Cleared",
+                "All seat reservations were cleared successfully!!!", "Ok");
+            RefreshSeating();
+            return;
+
 
         }
     }

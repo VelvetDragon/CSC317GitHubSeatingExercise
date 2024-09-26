@@ -125,6 +125,26 @@ namespace CSC317GitHubSeatingExercise
         //Assign to Team 2 Member
         private void ButtonCancelReservation(object sender, EventArgs e)
         {
+        var seat = await DisplayPromptAsync("Enter Seat Number", "Enter seat number: ");
+
+            if(seat != null)
+            {
+                for(int i = 0; i < seatingChart.GetLength(0); i++)
+                {
+                    for (int j = 0; j < seatingChart.GetLength(1); j++)
+                    {
+                        if (seatingChart[i, j].Name == seat)
+                        {
+                            seatingChart[i, j].Reserved = false;
+                            await DisplayAlert("Successfully Cancelled Reservation", "Your reservation was cancelled successfully!", "Ok");
+                            RefreshSeating();
+                            return;
+                        }
+                    }
+                }
+
+                await DisplayAlert ("Error", "Seat was not found.", "Ok");
+            }
 
         }
 
@@ -137,6 +157,22 @@ namespace CSC317GitHubSeatingExercise
         //Assign to Team 4 Member
         private void ButtonResetSeatingChart(object sender, EventArgs e)
         {
+        for(int i = 0; i < seatingChart.GetLength(0); i++)
+            {
+                for (int j = 0; j < seatingChart.GetLength(1); j++)
+                {
+                    if (seatingChart[i, j].Reserved == true)
+                    { 
+                        seatingChart[i, j].Reserved = false;
+                        
+                    }
+                }
+            }
+            await DisplayAlert("All Reservations Cleared",
+                "All seat reservations were cleared successfully!!!", "Ok");
+            RefreshSeating();
+            return;
+
 
         }
     }

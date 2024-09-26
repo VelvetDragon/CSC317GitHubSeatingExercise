@@ -116,11 +116,39 @@ namespace CSC317GitHubSeatingExercise
             }
         }
 
-        //Assign to Team 1 Member
-        private void ButtonReserveRange(object sender, EventArgs e)
-        {
+      //Suwan Aryal / Chetanchal Saud
+     private async void ButtonReserveRange(object sender, EventArgs e)
+     {
+         var startSeat = await DisplayPromptAsync("Reserve a Seat Range", "Enter starting seat number: ");
+         var endSeat = await DisplayPromptAsync("Reserve a Seat Range", "Enter ending seat number: ");
 
-        }
+         if (startSeat != null && endSeat != null)
+         {
+             bool rangeFound = false;
+             for (int i = 0; i < seatingChart.GetLength(0); i++)
+             {
+                 for (int j = 0; j < seatingChart.GetLength(1); j++)
+                 {
+                     if (seatingChart[i, j].Name == startSeat)
+                     {
+                         rangeFound = true;
+                     }
+
+                     if (rangeFound)
+                     {
+                         seatingChart[i, j].Reserved = true;
+
+                         if (seatingChart[i, j].Name == endSeat)
+                         {
+                             await DisplayAlert("Success", "The seat range was successfully reserved!", "Ok");
+                             RefreshSeating();
+                             return;
+                         }
+                     }
+                 }
+             }
+         }
+     }  
 
         //Bibas Kandel
         private void ButtonCancelReservation(object sender, EventArgs e)
@@ -148,7 +176,7 @@ namespace CSC317GitHubSeatingExercise
 
         }
 
-        //Assign to Team 3 Member Kadin Dengler
+        //Kadin Dengler / Chetanchal Saud
         private async void ButtonCancelReservationRange(object sender, EventArgs e)
         {
             var startSeat = await DisplayPromptAsync("Cancel Reservation Range", "Enter starting seat number: ");

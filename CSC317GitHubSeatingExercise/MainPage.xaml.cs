@@ -122,7 +122,7 @@ namespace CSC317GitHubSeatingExercise
 
         }
 
-        //Assign to Team 2 Member
+        //Bibas Kandel
         private void ButtonCancelReservation(object sender, EventArgs e)
         {
         var seat = await DisplayPromptAsync("Enter Seat Number", "Enter seat number: ");
@@ -154,7 +154,7 @@ namespace CSC317GitHubSeatingExercise
 
         }
 
-        //Assign to Team 4 Member
+        //Gunjan Sah
         private void ButtonResetSeatingChart(object sender, EventArgs e)
         {
         for(int i = 0; i < seatingChart.GetLength(0); i++)
@@ -169,7 +169,7 @@ namespace CSC317GitHubSeatingExercise
                 }
             }
             await DisplayAlert("All Reservations Cleared",
-                "All seat reservations were cleared successfully!!!", "Ok");
+                "All seat reservations were cleared successfully !!!", "Ok");
             RefreshSeating();
             return;
 

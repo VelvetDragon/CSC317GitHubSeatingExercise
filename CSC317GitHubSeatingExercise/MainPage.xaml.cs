@@ -149,10 +149,64 @@ namespace CSC317GitHubSeatingExercise
         }
 
         //Assign to Team 3 Member
-        private void ButtonCancelReservationRange(object sender, EventArgs e)
-        {
+        private async void ButtonCancelReservationRange(object sender, EventArgs e)
+{
+    var seat = await DisplayPromptAsync("Enter the range of seats", "Enter your range (e.g., A5-A8): ");
+    if (seat != null)
+    {
+        string[] seatRange = seat.Split('-');
 
+        if (seatRange.Length == 2)
+        {
+            string seatStart = seatRange[0].Trim();
+            string seatEnd = seatRange[1].Trim();
+
+            bool foundStart = false;
+            bool foundEnd = false;
+
+            for (int i = 0; i < seatingChart.GetLength(0); i++)
+            {
+                for (int j = 0; j < seatingChart.GetLength(1); j++)
+                {
+
+                    if (seatingChart[i, j].Name == seatStart)
+                    {
+                        foundStart = true;
+                    }
+                    //Go until the last seat to reserve
+                    if (foundStart && !foundEnd)
+                    {
+                        seatingChart[i, j].Reserved = false;
+                    }
+
+                    //end when the seatend is found and break
+                    if (seatingChart[i, j].Name == seatEnd)
+                    {
+                        foundEnd = true;
+                        break;
+                    }
+                }
+
+                if (foundEnd) break;
+            }
+
+            if (foundStart && foundEnd)
+            {
+                await DisplayAlert("Successfully Cancelled", "The range of seats was cancelled successfully!", "Ok");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Invalid seat range.", "Ok");
+            }
+
+            RefreshSeating();
         }
+        else
+        {
+            await DisplayAlert("Error", "Please enter a valid seat range (e.g., A1-A5).", "Ok");
+        }
+    }
+}
 
         //Gunjan Sah
         private void ButtonResetSeatingChart(object sender, EventArgs e)

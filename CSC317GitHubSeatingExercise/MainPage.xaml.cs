@@ -177,7 +177,7 @@ namespace CSC317GitHubSeatingExercise
         }
 
       //Kadin Dengler / Chetanchal Saud
-     private async void ButtonReserveRange(object sender, EventArgs e)
+     private async void ButtonCancelReservationRange(object sender, EventArgs e)
      {
          var startSeat = await DisplayPromptAsync("Cancel Reservation Range", "Enter starting seat number: ");
          var endSeat = await DisplayPromptAsync("Cancel Reservation Range", "Enter ending seat number: ");

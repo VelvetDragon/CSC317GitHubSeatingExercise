@@ -122,18 +122,14 @@ namespace CSC317GitHubSeatingExercise
             }
         }
 
-      //Suwan Aryal / Chetanchal Saud
-     private async void ButtonReserveRange(object sender, EventArgs e)
-     {
+        //Suwan Aryal / Chetanchal Saud
+        private async void ButtonReserveRange(object sender, EventArgs e)
+        {
             //-- suwan
             var seat = await DisplayPromptAsync("Enter the range of seats", "Enter your range (e.g., A5:A8): ");
-
             if (seat != null)
             {
-                
                 string[] seatRange = seat.Split(':'); // splitting the input string into an array to separate the start and end seats.
-
-                
                 if (seatRange.Length == 2) //checking if the input contains exactly two elements (start and end seat).
                 {
                     
@@ -166,7 +162,6 @@ namespace CSC317GitHubSeatingExercise
                     {
                         
                         bool seatsAvailable = true;
-                        
                         for (int j = startColumn; j <= endColumn; j++)
                         {
                             if (seatingChart[startRow, j].Reserved == true)
@@ -175,8 +170,35 @@ namespace CSC317GitHubSeatingExercise
                                 break; 
                             }
                         }
-            
-     }  
+
+                        //--- chetan
+                       
+                        if (seatsAvailable)
+                        {                          
+                            for (int j = startColumn; j <= endColumn; j++)
+                            {
+                                seatingChart[startRow, j].Reserved = true; 
+                            }
+                            
+                            await DisplayAlert("Success", "The range of seats was reserved successfully!", "Ok");
+                            RefreshSeating(); 
+                        }
+                        else
+                        {                            
+                            await DisplayAlert("Error", "One or more seats in the range are already reserved.", "Ok"); // error message if any of the seats in the range are already reserved.
+                        }
+                    }
+                    else
+                    {                        
+                        await DisplayAlert("Error", "Invalid seat range. Enter the seats in the same row.", "Ok");//  error message if the start and end seats are not in the same row.
+                    }
+                }
+                else
+                {                   
+                    await DisplayAlert("Error", "Please enter a valid seat range (e.g., A1:A5).", "Ok");
+                }
+            }
+        }
 
         //Bibas Kandel
         private async void ButtonCancelReservation(object sender, EventArgs e)

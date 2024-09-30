@@ -226,39 +226,57 @@ namespace CSC317GitHubSeatingExercise
 
         }
 
-      //Kadin Dengler / Chetanchal Saud
-     private async void ButtonCancelReservationRange(object sender, EventArgs e)
-     {
-         var startSeat = await DisplayPromptAsync("Cancel Reservation Range", "Enter starting seat number: ");
-         var endSeat = await DisplayPromptAsync("Cancel Reservation Range", "Enter ending seat number: ");
+//Kadin Dengler / Chetanchal Saud
+       private async void ButtonCancelReservationRange(object sender, EventArgs e)
+       {
+           var seatRange = await DisplayPromptAsync("Cancel Reservation Range", "Enter your range (e.g., A4:A5): ");
 
-         if (startSeat != null && endSeat != null)
-         {
-             bool rangeFound = false;
-             for (int i = 0; i < seatingChart.GetLength(0); i++)
-             {
-                 for (int j = 0; j < seatingChart.GetLength(1); j++)
-                 {
-                     if (seatingChart[i, j].Name == startSeat)
-                     {
-                         rangeFound = true;
-                     }
+           if (seatRange != null)
+           {
+               string[] seats = seatRange.Split(':'); 
 
-                     if (rangeFound)
-                     {
-                         seatingChart[i, j].Reserved = false;
+               if (seats.Length == 2) 
+               {
+                   string startSeat = seats[0];
+                   string endSeat = seats[1];
 
-                         if (seatingChart[i, j].Name == endSeat)
-                         {
-                             await DisplayAlert("Success", "The reservation range was successfully canceled!", "Ok");
-                             RefreshSeating();
-                             return;
-                         }
-                     }
-                 }
-             }
-         }
-     }  
+                   bool seatFound = false; 
+
+                   for (int i = 0; i < seatingChart.GetLength(0); i++)
+                   {
+                       for (int j = 0; j < seatingChart.GetLength(1); j++)
+                       {
+
+                           if (seatingChart[i, j].Name == startSeat)
+                           {
+                               seatFound = true;
+                           }
+
+                           if (seatFound)
+                           {
+                               seatingChart[i, j].Reserved = false; 
+
+                               if (seatingChart[i, j].Name == endSeat)
+                               {
+                                   await DisplayAlert("Success", "The reservation range was successfully canceled!", "Ok");
+                                   RefreshSeating();
+                                   return; 
+                               }
+                           }
+                       }
+                   }
+
+                   if (!seatFound)
+                   {
+                       await DisplayAlert("Error", "Seat range was not found.", "Ok");
+                   }
+               }
+               else 
+               {
+                   await DisplayAlert("Error", "Please enter a valid seat range (e.g., A1:A5).", "Ok");
+               }
+           }
+       }
 
 
         //Gunjan Sah

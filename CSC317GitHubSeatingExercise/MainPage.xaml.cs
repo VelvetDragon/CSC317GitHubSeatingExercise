@@ -218,6 +218,12 @@ namespace CSC317GitHubSeatingExercise
                             RefreshSeating();
                             return;
                         }
+                        else if (seatingChart[i, j].Reserved == false)
+                        {
+                            await DisplayAlert("Error Cancelling Reservation", "The seat has not been reserved yet.",
+                                "Ok");
+                            return;
+                        }
                     }
                 }
 

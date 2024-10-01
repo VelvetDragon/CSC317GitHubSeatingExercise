@@ -294,7 +294,7 @@ namespace CSC317GitHubSeatingExercise
                 }
             }
             await DisplayAlert("All Reservations Cleared",
-                "All seat reservations were cleared successfully !!!", "Ok");
+                "All seat reservations were cleared successfully!", "Ok");
             RefreshSeating();
             return;
 

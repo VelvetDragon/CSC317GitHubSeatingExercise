@@ -214,7 +214,7 @@ namespace CSC317GitHubSeatingExercise
                         if (seatingChart[i, j].Name == seat)
                         {
                             seatingChart[i, j].Reserved = false;
-                            await DisplayAlert("Successfully Cancelled Reservation", "Your reservation was cancelled successfully!", "Ok");
+                            await DisplayAlert("Successfully Cancelled", "Your reservation was cancelled successfully!", "Ok");
                             RefreshSeating();
                             return;
                         }
